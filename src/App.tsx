@@ -16,24 +16,33 @@ import {
   Button,
   Text,
 } from '@chakra-ui/react';
+import TableData from './TableData';
 
 export default function App() {
   const [resTotal, setResTotal] = useState(0);
   const [devTotal, setDevTotal] = useState(0);
   const [results, setResults] = useState(0);
   const [message, setMessage] = useState('');
-  const [k1, setK1] = useState(0);
-  const [k2, setK2] = useState(0);
-  const [k3, setK3] = useState(0);
-  const [k4, setK4] = useState(0);
-  const [k5, setK5] = useState(0);
-  const [k6, setK6] = useState(0);
-  const [k7, setK7] = useState(0);
+  const [color, setColor] = useState('');
+  const [productsOutput, setProductsOutput] = useState(0);
+  const [rdCostsOutput, setRdCostsOutput] = useState(0);
+  const [valPerPerson, setValPerPerson] = useState(0);
+  const [investInCapital, setInvestInCapital] = useState(0);
+  const [industrialProd, setIndustrialProd] = useState(0);
+  const [physValueAdded, setPhysValueAdded] = useState(0);
+  const [structProd, setStructProd] = useState(0);
 
   const getResourcesTotal = (): number => {
     let result = 0;
-    if (k1 && k2 && k3 && k4) {
-      result = parseFloat((0.87 * k1 + 0.53 * k2 + 0.69 * k3 + 0.53 * k4).toFixed(2));
+    if (productsOutput && rdCostsOutput && valPerPerson && investInCapital) {
+      result = parseFloat(
+        (
+          0.87 * productsOutput +
+          0.53 * rdCostsOutput +
+          0.69 * valPerPerson +
+          0.53 * investInCapital
+        ).toFixed(2),
+      );
       return result;
     }
     return 0;
@@ -41,8 +50,10 @@ export default function App() {
 
   const getDevelopmentTotal = (): number => {
     let result = 0;
-    if (k5 && k6 && k7) {
-      result = parseFloat((0.6 * k5 + 0.74 * k6 + 0.81 * k7).toFixed(2));
+    if (industrialProd && physValueAdded && structProd) {
+      result = parseFloat(
+        (0.6 * industrialProd + 0.74 * physValueAdded + 0.81 * structProd).toFixed(2),
+      );
       return result;
     }
     return 0;
@@ -59,14 +70,16 @@ export default function App() {
   };
 
   const getResultsText = (value: number): string => {
-    if (value > 1) {
+    if (value >= 1) {
       setMessage(
         'Ресурсы и производственный потенциал предприятия используются эффективно',
       );
+      setColor('green');
     } else if (value < 1) {
       setMessage(
         'Ресурсы и производственный потенциал предприятия используются неэффективно, необходима корректировка производственной политики',
       );
+      setColor('red');
     }
     return '';
   };
@@ -76,9 +89,16 @@ export default function App() {
     setDevTotal(getDevelopmentTotal);
     getDiff();
     setResults(0);
-  }, [k1, k2, k3, k4, k5, k6, k7]);
+  }, [
+    productsOutput,
+    rdCostsOutput,
+    valPerPerson,
+    investInCapital,
+    industrialProd,
+    physValueAdded,
+    structProd,
+  ]);
 
-  console.log(results);
   return (
     <Container
       maxW='container.md'
@@ -91,195 +111,19 @@ export default function App() {
         textAlign='center'>
         Пояснение РИД Развитие и Ресурсы
       </Heading>
-      <TableContainer>
-        <Table
-          colorScheme='blue'
-          size='sm'>
-          <TableCaption
-            placement='top'
-            fontSize={18}>
-            Компонента "Ресурсы"
-          </TableCaption>
-          <Thead>
-            <Tr>
-              <Th color='black'>Показатель</Th>
-              <Th
-                color='black'
-                textAlign='center'>
-                Значение
-              </Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            <Tr>
-              <Td>Доля высокотехнологичной продукции в выпуске, %</Td>
-              <Td isNumeric>
-                <Input
-                  min={0}
-                  type='number'
-                  variant='outline'
-                  size='md'
-                  width='100px'
-                  textAlign='right'
-                  height={7}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    console.log(e.target.value.length);
-                    setK1(Number(e.target.value));
-                  }}
-                />
-              </Td>
-            </Tr>
-            <Tr>
-              <Td>Доля внутренних затрат на исследования и разработки в выпуске, %</Td>
-              <Td isNumeric>
-                {' '}
-                <Input
-                  min={0}
-                  type='number'
-                  variant='outline'
-                  size='md'
-                  width='100px'
-                  textAlign='right'
-                  height={7}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    setK2(Number(e.target.value))
-                  }
-                />
-              </Td>
-            </Tr>
-            <Tr>
-              <Td>Добавленная стоимость на человека, млн</Td>
-              <Td isNumeric>
-                {' '}
-                <Input
-                  min={0}
-                  type='number'
-                  variant='outline'
-                  size='md'
-                  width='100px'
-                  textAlign='right'
-                  height={7}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    setK3(Number(e.target.value))
-                  }
-                />
-              </Td>
-            </Tr>
-            <Tr>
-              <Td>Доля инвестиций в основной капитал в выпуске, %</Td>
-              <Td isNumeric>
-                <Input
-                  min={0}
-                  type='number'
-                  variant='outline'
-                  size='md'
-                  width='100px'
-                  textAlign='right'
-                  height={7}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    setK4(Number(e.target.value))
-                  }
-                />
-              </Td>
-            </Tr>
-          </Tbody>
-          <Tfoot>
-            <Tr>
-              <Th>Итог</Th>
-              <Th
-                pr={8}
-                isNumeric>
-                {resTotal}
-              </Th>
-            </Tr>
-          </Tfoot>
-        </Table>
-      </TableContainer>
-      <TableContainer
-        maxW='780px'
-        mb={10}>
-        <Table
-          colorScheme='blue'
-          size='sm'>
-          <TableCaption
-            placement='top'
-            fontSize={18}>
-            Компонента "Развитие"
-          </TableCaption>
-          <Tbody>
-            <Tr>
-              <Td width='462px'>Индекс промышленного производства, %</Td>
-              <Td isNumeric>
-                <Input
-                  min={0}
-                  type='number'
-                  variant='outline'
-                  size='md'
-                  width='100px'
-                  textAlign='right'
-                  height={7}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    setK5(Number(e.target.value))
-                  }
-                />
-              </Td>
-            </Tr>
-            <Tr>
-              <Td width='462px'>Индекс физического объема добавленной стоимости, %</Td>
-              <Td isNumeric>
-                <Input
-                  min={0}
-                  type='number'
-                  variant='outline'
-                  size='md'
-                  width='100px'
-                  textAlign='right'
-                  height={7}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    setK6(Number(e.target.value))
-                  }
-                />
-              </Td>
-            </Tr>
-            <Tr>
-              <Td width='462px'>Структура ВДС добыча, %</Td>
-              <Td isNumeric>
-                <Input
-                  min={0}
-                  type='number'
-                  variant='outline'
-                  size='md'
-                  width='100px'
-                  textAlign='right'
-                  height={7}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    setK7(Number(e.target.value))
-                  }
-                />
-              </Td>
-            </Tr>
-          </Tbody>
-          <Tfoot>
-            <Tr>
-              <Th>Итог</Th>
-              <Th
-                pr={8}
-                isNumeric>
-                {devTotal}
-              </Th>
-            </Tr>
-            <Tr>
-              <Th>Соотношение Развитие / Ресурсы</Th>
-              <Th
-                pr={8}
-                pt={4}
-                isNumeric>
-                {results.toFixed(2)}
-              </Th>
-            </Tr>
-          </Tfoot>
-        </Table>
-      </TableContainer>
+      <TableData
+        setIndustrialProd={setIndustrialProd}
+        setInvestInCapital={setInvestInCapital}
+        setPhysValueAdded={setPhysValueAdded}
+        setProductsOutput={setProductsOutput}
+        setRdCostsOutput={setRdCostsOutput}
+        setStructProd={setStructProd}
+        setValPerPerson={setValPerPerson}
+        color={color}
+        devTotal={devTotal}
+        resTotal={resTotal}
+        results={results}
+      />
       <Button
         alignSelf='end'
         isDisabled={resTotal === 0 || devTotal === 0}
@@ -289,10 +133,18 @@ export default function App() {
         Рассчитать
       </Button>
 
-      <Box>
-        <Heading as='h3'>Выводы</Heading>
-        <Text>{message}</Text>
-      </Box>
+      {results > 0 && (
+        <Box>
+          <Heading
+            textAlign='center'
+            mb={5}
+            as='h3'
+            fontSize={28}>
+            Выводы
+          </Heading>
+          <Text fontSize={16}>{message}</Text>
+        </Box>
+      )}
     </Container>
   );
 }
