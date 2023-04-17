@@ -52,6 +52,7 @@ export default function App() {
     let result = 0;
     if (resTotal && devTotal) {
       result = devTotal / resTotal;
+      getResultsText(result);
       setResults(result);
     }
     return 0;
@@ -74,6 +75,7 @@ export default function App() {
     setResTotal(getResourcesTotal);
     setDevTotal(getDevelopmentTotal);
     getDiff();
+    setResults(0);
   }, [k1, k2, k3, k4, k5, k6, k7]);
 
   console.log(results);
@@ -181,12 +183,16 @@ export default function App() {
               </Td>
             </Tr>
           </Tbody>
-          {/* <Tfoot>
+          <Tfoot>
             <Tr>
               <Th>Итог</Th>
-              <Th isNumeric>{resTotal}</Th>
+              <Th
+                pr={8}
+                isNumeric>
+                {resTotal}
+              </Th>
             </Tr>
-          </Tfoot> */}
+          </Tfoot>
         </Table>
       </TableContainer>
       <TableContainer
@@ -254,22 +260,31 @@ export default function App() {
             </Tr>
           </Tbody>
           <Tfoot>
-            {/* <Tr>
+            <Tr>
               <Th>Итог</Th>
-              <Th isNumeric>{devTotal}</Th>
-            </Tr> */}
+              <Th
+                pr={8}
+                isNumeric>
+                {devTotal}
+              </Th>
+            </Tr>
             <Tr>
               <Th>Соотношение Развитие / Ресурсы</Th>
-              <Th isNumeric>{results.toFixed(2)}</Th>
+              <Th
+                pr={8}
+                pt={4}
+                isNumeric>
+                {results.toFixed(2)}
+              </Th>
             </Tr>
           </Tfoot>
         </Table>
       </TableContainer>
       <Button
         alignSelf='end'
+        isDisabled={resTotal === 0 || devTotal === 0}
         onClick={() => {
-          setResults(getDiff);
-          setMessage(getResultsText);
+          getDiff();
         }}>
         Рассчитать
       </Button>
