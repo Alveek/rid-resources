@@ -1,3 +1,5 @@
+import React, { ReactElement, Dispatch, SetStateAction } from 'react';
+
 import {
   Table,
   Thead,
@@ -11,7 +13,21 @@ import {
   Input,
 } from '@chakra-ui/react';
 
-export default function TableData({
+interface Props {
+  setProductsOutput: Dispatch<SetStateAction<number>>;
+  setIndustrialProd: Dispatch<SetStateAction<number>>;
+  setInvestInCapital: Dispatch<SetStateAction<number>>;
+  setPhysValueAdded: Dispatch<SetStateAction<number>>;
+  setRdCostsOutput: Dispatch<SetStateAction<number>>;
+  setValPerPerson: Dispatch<SetStateAction<number>>;
+  setStructProd: Dispatch<SetStateAction<number>>;
+  devTotal: number;
+  resTotal: number;
+  color: string;
+  results: number;
+}
+
+const TableData = ({
   setProductsOutput,
   setIndustrialProd,
   setInvestInCapital,
@@ -23,7 +39,7 @@ export default function TableData({
   resTotal,
   color,
   results,
-}) {
+}: Props): ReactElement => {
   return (
     <>
       <TableContainer>
@@ -219,4 +235,6 @@ export default function TableData({
       </TableContainer>
     </>
   );
-}
+};
+
+export default TableData;
