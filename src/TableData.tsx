@@ -57,7 +57,7 @@ const TableData = ({
               <Th
                 color='black'
                 textAlign='center'>
-                Значение
+                Значение (2022)
               </Th>
             </Tr>
           </Thead>

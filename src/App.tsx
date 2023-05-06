@@ -17,6 +17,7 @@ import {
   Text,
 } from '@chakra-ui/react';
 import TableData from './TableData';
+import Chart from './Chart';
 
 export default function App() {
   const [resTotal, setResTotal] = useState(0);
@@ -145,6 +146,12 @@ export default function App() {
           <Text fontSize={16}>{message}</Text>
         </Box>
       )}
+
+      <Box
+        alignSelf='center'
+        mt={10}>
+        <Chart />
+      </Box>
     </Container>
   );
 }
