@@ -1,25 +1,14 @@
 import { useEffect, useState } from 'react';
-import {
-  Container,
-  Table,
-  Thead,
-  Tbody,
-  Tfoot,
-  Tr,
-  Th,
-  Td,
-  TableCaption,
-  TableContainer,
-  Input,
-  Heading,
-  Box,
-  Button,
-  Text,
-} from '@chakra-ui/react';
+import { Container, Heading, Box, Button, Text } from '@chakra-ui/react';
 import TableData from './TableData';
 import Chart from './Chart';
 
 export default function App() {
+  interface PeriodData {
+    currentYear: number;
+    result: number;
+  }
+
   const [resTotal, setResTotal] = useState(0);
   const [devTotal, setDevTotal] = useState(0);
   const [results, setResults] = useState(0);
@@ -32,6 +21,8 @@ export default function App() {
   const [industrialProd, setIndustrialProd] = useState(0);
   const [physValueAdded, setPhysValueAdded] = useState(0);
   const [structProd, setStructProd] = useState(0);
+  const [periodData, setPeriodData] = useState<PeriodData[]>([]);
+  const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
 
   const getResourcesTotal = (): number => {
     let result = 0;
@@ -42,7 +33,7 @@ export default function App() {
           0.53 * rdCostsOutput +
           0.69 * valPerPerson +
           0.53 * investInCapital
-        ).toFixed(2),
+        ).toFixed(1)
       );
       return result;
     }
@@ -53,7 +44,11 @@ export default function App() {
     let result = 0;
     if (industrialProd && physValueAdded && structProd) {
       result = parseFloat(
-        (0.6 * industrialProd + 0.74 * physValueAdded + 0.81 * structProd).toFixed(2),
+        (
+          0.6 * industrialProd +
+          0.74 * physValueAdded +
+          0.81 * structProd
+        ).toFixed(1)
       );
       return result;
     }
@@ -63,9 +58,11 @@ export default function App() {
   const getDiff = (): number => {
     let result = 0;
     if (resTotal && devTotal) {
-      result = devTotal / resTotal;
+      result = parseFloat((devTotal / resTotal).toFixed(1));
       getResultsText(result);
       setResults(result);
+      setPeriodData((prev: PeriodData[]) => [...prev, { currentYear, result }]);
+      console.log(periodData);
     }
     return 0;
   };
@@ -73,22 +70,32 @@ export default function App() {
   const getResultsText = (value: number): string => {
     if (value >= 1) {
       setMessage(
-        'Ресурсы и производственный потенциал предприятия используются эффективно',
+        'Ресурсы и производственный потенциал предприятия используются эффективно'
       );
       setColor('green');
     } else if (value < 1) {
       setMessage(
-        'Ресурсы и производственный потенциал предприятия используются неэффективно, необходима корректировка производственной политики',
+        'Ресурсы и производственный потенциал предприятия используются неэффективно, необходима корректировка производственной политики'
       );
       setColor('red');
     }
     return '';
   };
 
+  const reset = (): void => {
+    document.querySelectorAll('input').forEach((input: HTMLInputElement) => {
+      input.valueAsNumber = 0;
+    });
+    setResTotal(0);
+    setDevTotal(0);
+    setResults(0);
+    setCurrentYear(currentYear + 1);
+  };
+
   useEffect(() => {
     setResTotal(getResourcesTotal);
     setDevTotal(getDevelopmentTotal);
-    getDiff();
+    // getDiff();
     setResults(0);
   }, [
     productsOutput,
@@ -102,14 +109,12 @@ export default function App() {
 
   return (
     <Container
-      maxW='container.md'
-      display='flex'
-      flexDirection='column'
-      my={10}>
-      <Heading
-        as='h1'
-        size='lg'
-        textAlign='center'>
+      maxW="container.md"
+      display="flex"
+      flexDirection="column"
+      my={10}
+    >
+      <Heading as="h1" size="lg" textAlign="center">
         Пояснение РИД Развитие и Ресурсы
       </Heading>
       <TableData
@@ -120,37 +125,48 @@ export default function App() {
         setRdCostsOutput={setRdCostsOutput}
         setStructProd={setStructProd}
         setValPerPerson={setValPerPerson}
+        currentYear={currentYear}
         color={color}
         devTotal={devTotal}
         resTotal={resTotal}
         results={results}
       />
-      <Button
-        alignSelf='end'
-        isDisabled={resTotal === 0 || devTotal === 0}
-        onClick={() => {
-          getDiff();
-        }}>
-        Рассчитать
-      </Button>
+      {results === 0 && (
+        <Button
+          colorScheme="green"
+          alignSelf="end"
+          isDisabled={resTotal === 0 || devTotal === 0}
+          onClick={() => {
+            getDiff();
+          }}
+        >
+          Рассчитать
+        </Button>
+      )}
+
+      {results > 0 && (
+        <Button
+          colorScheme="blue"
+          alignSelf="end"
+          onClick={() => {
+            reset();
+          }}
+        >
+          Рассчитать новый период
+        </Button>
+      )}
 
       {results > 0 && (
         <Box>
-          <Heading
-            textAlign='center'
-            mb={5}
-            as='h3'
-            fontSize={28}>
+          <Heading textAlign="center" mb={5} as="h3" fontSize={28}>
             Выводы
           </Heading>
           <Text fontSize={16}>{message}</Text>
         </Box>
       )}
 
-      <Box
-        alignSelf='center'
-        mt={10}>
-        <Chart />
+      <Box alignSelf="center" mt={10}>
+        <Chart data={periodData} />
       </Box>
     </Container>
   );

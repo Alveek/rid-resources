@@ -21,6 +21,7 @@ interface Props {
   setRdCostsOutput: Dispatch<SetStateAction<number>>;
   setValPerPerson: Dispatch<SetStateAction<number>>;
   setStructProd: Dispatch<SetStateAction<number>>;
+  currentYear: number;
   devTotal: number;
   resTotal: number;
   color: string;
@@ -35,6 +36,7 @@ const TableData = ({
   setRdCostsOutput,
   setValPerPerson,
   setStructProd,
+  currentYear,
   devTotal,
   resTotal,
   color,
@@ -43,21 +45,15 @@ const TableData = ({
   return (
     <>
       <TableContainer>
-        <Table
-          colorScheme='blue'
-          size='sm'>
-          <TableCaption
-            placement='top'
-            fontSize={18}>
+        <Table colorScheme="blue" size="sm">
+          <TableCaption placement="top" fontSize={18}>
             Компонента "Ресурсы"
           </TableCaption>
           <Thead>
             <Tr>
-              <Th color='black'>Показатель</Th>
-              <Th
-                color='black'
-                textAlign='center'>
-                Значение (2022)
+              <Th color="black">Показатель</Th>
+              <Th color="black" textAlign="center">
+                Значение ({currentYear})
               </Th>
             </Tr>
           </Thead>
@@ -67,11 +63,11 @@ const TableData = ({
               <Td isNumeric>
                 <Input
                   min={0}
-                  type='number'
-                  variant='outline'
-                  size='md'
-                  width='100px'
-                  textAlign='right'
+                  type="number"
+                  variant="outline"
+                  size="md"
+                  width="100px"
+                  textAlign="right"
                   height={7}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     setProductsOutput(Number(e.target.value));
@@ -80,16 +76,18 @@ const TableData = ({
               </Td>
             </Tr>
             <Tr>
-              <Td>Доля внутренних затрат на исследования и разработки в выпуске, %</Td>
+              <Td>
+                Доля внутренних затрат на исследования и разработки в выпуске, %
+              </Td>
               <Td isNumeric>
                 {' '}
                 <Input
                   min={0}
-                  type='number'
-                  variant='outline'
-                  size='md'
-                  width='100px'
-                  textAlign='right'
+                  type="number"
+                  variant="outline"
+                  size="md"
+                  width="100px"
+                  textAlign="right"
                   height={7}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                     setRdCostsOutput(Number(e.target.value))
@@ -103,11 +101,11 @@ const TableData = ({
                 {' '}
                 <Input
                   min={0}
-                  type='number'
-                  variant='outline'
-                  size='md'
-                  width='100px'
-                  textAlign='right'
+                  type="number"
+                  variant="outline"
+                  size="md"
+                  width="100px"
+                  textAlign="right"
                   height={7}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                     setValPerPerson(Number(e.target.value))
@@ -120,11 +118,11 @@ const TableData = ({
               <Td isNumeric>
                 <Input
                   min={0}
-                  type='number'
-                  variant='outline'
-                  size='md'
-                  width='100px'
-                  textAlign='right'
+                  type="number"
+                  variant="outline"
+                  size="md"
+                  width="100px"
+                  textAlign="right"
                   height={7}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                     setInvestInCapital(Number(e.target.value))
@@ -135,39 +133,30 @@ const TableData = ({
           </Tbody>
           <Tfoot>
             <Tr>
-              <Th color='black'>Итог</Th>
-              <Th
-                pr={8}
-                py={3}
-                isNumeric>
+              <Th color="black">Итог</Th>
+              <Th pr={8} py={3} isNumeric>
                 {resTotal}
               </Th>
             </Tr>
           </Tfoot>
         </Table>
       </TableContainer>
-      <TableContainer
-        maxW='780px'
-        mb={10}>
-        <Table
-          colorScheme='blue'
-          size='sm'>
-          <TableCaption
-            placement='top'
-            fontSize={18}>
+      <TableContainer maxW="780px" mb={10}>
+        <Table colorScheme="blue" size="sm">
+          <TableCaption placement="top" fontSize={18}>
             Компонента "Развитие"
           </TableCaption>
           <Tbody>
             <Tr>
-              <Td width='462px'>Индекс промышленного производства, %</Td>
+              <Td width="462px">Индекс промышленного производства, %</Td>
               <Td isNumeric>
                 <Input
                   min={0}
-                  type='number'
-                  variant='outline'
-                  size='md'
-                  width='100px'
-                  textAlign='right'
+                  type="number"
+                  variant="outline"
+                  size="md"
+                  width="100px"
+                  textAlign="right"
                   height={7}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                     setIndustrialProd(Number(e.target.value))
@@ -176,15 +165,17 @@ const TableData = ({
               </Td>
             </Tr>
             <Tr>
-              <Td width='462px'>Индекс физического объема добавленной стоимости, %</Td>
+              <Td width="462px">
+                Индекс физического объема добавленной стоимости, %
+              </Td>
               <Td isNumeric>
                 <Input
                   min={0}
-                  type='number'
-                  variant='outline'
-                  size='md'
-                  width='100px'
-                  textAlign='right'
+                  type="number"
+                  variant="outline"
+                  size="md"
+                  width="100px"
+                  textAlign="right"
                   height={7}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                     setPhysValueAdded(Number(e.target.value))
@@ -193,15 +184,15 @@ const TableData = ({
               </Td>
             </Tr>
             <Tr>
-              <Td width='462px'>Структура ВДС добыча, %</Td>
+              <Td width="462px">Структура ВДС добыча, %</Td>
               <Td isNumeric>
                 <Input
                   min={0}
-                  type='number'
-                  variant='outline'
-                  size='md'
-                  width='100px'
-                  textAlign='right'
+                  type="number"
+                  variant="outline"
+                  size="md"
+                  width="100px"
+                  textAlign="right"
                   height={7}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                     setStructProd(Number(e.target.value))
@@ -212,22 +203,15 @@ const TableData = ({
           </Tbody>
           <Tfoot>
             <Tr>
-              <Th color='black'>Итог</Th>
-              <Th
-                pr={8}
-                py={3}
-                isNumeric>
+              <Th color="black">Итог</Th>
+              <Th pr={8} py={3} isNumeric>
                 {devTotal}
               </Th>
             </Tr>
             <Tr>
-              <Th color='black'>Соотношение Развитие / Ресурсы</Th>
-              <Th
-                pr={8}
-                py={3}
-                color={results > 0 ? color : ''}
-                isNumeric>
-                {results.toFixed(2)}
+              <Th color="black">Соотношение Развитие / Ресурсы</Th>
+              <Th pr={8} py={3} color={results > 0 ? color : ''} isNumeric>
+                {results.toFixed(1)}
               </Th>
             </Tr>
           </Tfoot>
