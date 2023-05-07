@@ -59,8 +59,8 @@ export default function App() {
     let result = 0;
     if (resTotal && devTotal) {
       result = parseFloat((devTotal / resTotal).toFixed(1));
-      getResultsText(result);
       setResults(result);
+      getResultsText(result);
       setPeriodData((prev: PeriodData[]) => [...prev, { currentYear, result }]);
     }
     return 0;
@@ -69,12 +69,12 @@ export default function App() {
   const getResultsText = (value: number): string => {
     if (value >= 1) {
       setMessage(
-        'Ресурсы и производственный потенциал предприятия используются эффективно'
+        `Эффект от отдачи ресурсов составляет ${value}. Рост показателя говорит о повышении эффективности используемых ресурсов`
       );
       setColor('green');
     } else if (value < 1) {
       setMessage(
-        'Ресурсы и производственный потенциал предприятия используются неэффективно, необходима корректировка производственной политики'
+        `Эффект от отдачи ресурсов составляет ${value}. Снижение показателя говорит об уменььшении эффективности используемых ресурсов`
       );
       setColor('red');
     }
@@ -82,12 +82,6 @@ export default function App() {
   };
 
   const reset = (): void => {
-    // document.querySelectorAll('input').forEach((input: HTMLInputElement) => {
-    //   input.valueAsNumber = 0;
-    // });
-    // setResTotal(0);
-    // setDevTotal(0);
-    setResults(0);
     setProductsOutput(0);
     setRdCostsOutput(0);
     setValPerPerson(0);
@@ -99,6 +93,7 @@ export default function App() {
 
     setResTotal(getResourcesTotal);
     setDevTotal(getDevelopmentTotal);
+    setResults(0);
   };
 
   useEffect(() => {
@@ -124,7 +119,7 @@ export default function App() {
       my={10}
     >
       <Heading as="h1" size="lg" textAlign="center">
-        Пояснение РИД Развитие и Ресурсы
+        Расчет эффективности использования ресурсов предприятия
       </Heading>
       <TableData
         setIndustrialProd={setIndustrialProd}

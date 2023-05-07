@@ -85,7 +85,6 @@ const TableData = ({
                   height={7}
                   value={productsOutput || ''}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    console.log(e.target.value);
                     setProductsOutput(Number(e.target.value));
                   }}
                 />
