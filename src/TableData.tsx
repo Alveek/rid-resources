@@ -21,6 +21,13 @@ interface Props {
   setRdCostsOutput: Dispatch<SetStateAction<number>>;
   setValPerPerson: Dispatch<SetStateAction<number>>;
   setStructProd: Dispatch<SetStateAction<number>>;
+  productsOutput: number;
+  rdCostsOutput: number;
+  valPerPerson: number;
+  investInCapital: number;
+  industrialProd: number;
+  physValueAdded: number;
+  structProd: number;
   currentYear: number;
   devTotal: number;
   resTotal: number;
@@ -36,6 +43,13 @@ const TableData = ({
   setRdCostsOutput,
   setValPerPerson,
   setStructProd,
+  productsOutput,
+  rdCostsOutput,
+  valPerPerson,
+  investInCapital,
+  industrialProd,
+  physValueAdded,
+  structProd,
   currentYear,
   devTotal,
   resTotal,
@@ -69,7 +83,9 @@ const TableData = ({
                   width="100px"
                   textAlign="right"
                   height={7}
+                  value={productsOutput || ''}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    console.log(e.target.value);
                     setProductsOutput(Number(e.target.value));
                   }}
                 />
@@ -89,6 +105,7 @@ const TableData = ({
                   width="100px"
                   textAlign="right"
                   height={7}
+                  value={rdCostsOutput || ''}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                     setRdCostsOutput(Number(e.target.value))
                   }
@@ -107,6 +124,7 @@ const TableData = ({
                   width="100px"
                   textAlign="right"
                   height={7}
+                  value={valPerPerson || ''}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                     setValPerPerson(Number(e.target.value))
                   }
@@ -124,6 +142,7 @@ const TableData = ({
                   width="100px"
                   textAlign="right"
                   height={7}
+                  value={investInCapital || ''}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                     setInvestInCapital(Number(e.target.value))
                   }
@@ -158,6 +177,7 @@ const TableData = ({
                   width="100px"
                   textAlign="right"
                   height={7}
+                  value={industrialProd || ''}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                     setIndustrialProd(Number(e.target.value))
                   }
@@ -177,6 +197,7 @@ const TableData = ({
                   width="100px"
                   textAlign="right"
                   height={7}
+                  value={physValueAdded || ''}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                     setPhysValueAdded(Number(e.target.value))
                   }
@@ -194,6 +215,7 @@ const TableData = ({
                   width="100px"
                   textAlign="right"
                   height={7}
+                  value={structProd || ''}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                     setStructProd(Number(e.target.value))
                   }

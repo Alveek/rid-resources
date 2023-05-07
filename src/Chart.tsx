@@ -22,7 +22,7 @@ export default function App({ data }: any) {
         bottom: 5,
       }}
     >
-      <CartesianGrid strokeDasharray="3 3" />
+      {/* <CartesianGrid strokeDasharray="" /> */}
       <XAxis dataKey="currentYear" />
       <YAxis />
       <Tooltip />

@@ -62,7 +62,6 @@ export default function App() {
       getResultsText(result);
       setResults(result);
       setPeriodData((prev: PeriodData[]) => [...prev, { currentYear, result }]);
-      console.log(periodData);
     }
     return 0;
   };
@@ -83,13 +82,23 @@ export default function App() {
   };
 
   const reset = (): void => {
-    document.querySelectorAll('input').forEach((input: HTMLInputElement) => {
-      input.valueAsNumber = 0;
-    });
-    setResTotal(0);
-    setDevTotal(0);
+    // document.querySelectorAll('input').forEach((input: HTMLInputElement) => {
+    //   input.valueAsNumber = 0;
+    // });
+    // setResTotal(0);
+    // setDevTotal(0);
     setResults(0);
+    setProductsOutput(0);
+    setRdCostsOutput(0);
+    setValPerPerson(0);
+    setInvestInCapital(0);
+    setIndustrialProd(0);
+    setPhysValueAdded(0);
+    setStructProd(0);
     setCurrentYear(currentYear + 1);
+
+    setResTotal(getResourcesTotal);
+    setDevTotal(getDevelopmentTotal);
   };
 
   useEffect(() => {
@@ -125,6 +134,13 @@ export default function App() {
         setRdCostsOutput={setRdCostsOutput}
         setStructProd={setStructProd}
         setValPerPerson={setValPerPerson}
+        productsOutput={productsOutput}
+        rdCostsOutput={rdCostsOutput}
+        valPerPerson={valPerPerson}
+        investInCapital={investInCapital}
+        industrialProd={industrialProd}
+        physValueAdded={physValueAdded}
+        structProd={structProd}
         currentYear={currentYear}
         color={color}
         devTotal={devTotal}
