@@ -68,7 +68,6 @@ export default function App() {
 
   const getResultsText = (value: number): string => {
     const prevRes = periodData.at(-1)?.result || 1;
-    console.log(prevRes);
     if (value >= 1 && periodData.length === 0) {
       setMessage(
         'Ресурсы и производственный потенциал предприятия используются эффективно'
