@@ -60,23 +60,38 @@ export default function App() {
     if (resTotal && devTotal) {
       result = parseFloat((devTotal / resTotal).toFixed(1));
       setResults(result);
-      getResultsText(result);
       setPeriodData((prev: PeriodData[]) => [...prev, { currentYear, result }]);
+      getResultsText(result);
     }
     return 0;
   };
 
   const getResultsText = (value: number): string => {
-    if (value >= 1) {
+    const prevRes = periodData.at(-1)?.result || 1;
+    console.log(prevRes);
+    if (value >= 1 && periodData.length === 0) {
+      setMessage(
+        'Ресурсы и производственный потенциал предприятия используются эффективно'
+      );
+      setColor('green');
+    } else if (value < 1 && periodData.length === 0) {
+      setMessage(
+        'Ресурсы и производственный потенциал предприятия используются неэффективно, необходима корректировка производственной политики'
+      );
+      setColor('red');
+    } else if (value > prevRes) {
       setMessage(
         `Эффект от отдачи ресурсов составляет ${value}. Рост показателя говорит о повышении эффективности используемых ресурсов`
       );
       setColor('green');
-    } else if (value < 1) {
+    } else if (value < prevRes) {
       setMessage(
-        `Эффект от отдачи ресурсов составляет ${value}. Снижение показателя говорит об уменььшении эффективности используемых ресурсов`
+        `Эффект от отдачи ресурсов составляет ${value}. Снижение показателя говорит об уменьшении эффективности используемых ресурсов`
       );
       setColor('red');
+    } else if (value === prevRes) {
+      setMessage(`Эффект от отдачи ресурсов остался прежним ${value}.`);
+      setColor('black');
     }
     return '';
   };
